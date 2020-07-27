@@ -32,7 +32,7 @@ header = header.split()
 
 to see full header:
 
-from supervisor.util import header
+from supervisor.utils import header
 print(header)
 
 """
@@ -59,7 +59,7 @@ def download_youtube_audio(url, title, destination="audio", split=2500, keep_mp3
 
     usage:
 
-    from supervisor.util import download_youtube_audio
+    from supervisor.utils import download_youtube_audio
     download_youtube_audio("https://www.youtube.com/watch?v=3HlPkRNNLh8", "sleep")
 
     >> 'audio/sleep'
@@ -137,7 +137,7 @@ def dataset_from_segments(path, title, destination='datasets', header=header):
 
     usage: 
 
-    from supervisor.util import dataset_from_segments
+    from supervisor.utils import dataset_from_segments
     dataset_from_segments('audio/sleep', 'sleep')
 
     >> 'datasets\\sleep.csv'
