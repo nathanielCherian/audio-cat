@@ -1,1 +1,5 @@
 librosa
+numpy
+pandas
+scikit-learn
+youtube_dl

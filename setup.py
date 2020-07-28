@@ -21,9 +21,11 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",
+        'Development Status :: 3 - Alpha',
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
+    license='MIT',
     python_requires='>=3.6',
     install_requires= get_requirements(),
 
