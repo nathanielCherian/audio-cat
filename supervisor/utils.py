@@ -18,7 +18,10 @@ def timestamps(total_time, split=2500):
         yield (i-1)*split, i * split, i
 
 
-
+def mp3_to_wav(mp3, wav):
+    sound = AudioSegment.from_file(mp3)
+    sound.export(wav, format="wav")
+    return wav
 
 
 header = 'filename chroma_stft rmse spectral_centroid spectral_bandwidth rolloff zero_crossing_rate'
@@ -50,7 +53,7 @@ def download_youtube_audio(url, title, destination="audio", split=2500, keep_mp3
     url: video url (includeing https)
     title: what audio should be named
     destination: directory where all files are located default=audio
-    split: split duration in ms default=2500
+    split: split duration in ms, set < 0 to cancel split default=2500
     keep_mp3: wether to keep mp3 file or delete it (NOT IMPLEMENTED)
     blurb: where full interview is held default=FULL_AUDIO
 
@@ -92,32 +95,50 @@ def download_youtube_audio(url, title, destination="audio", split=2500, keep_mp3
     with youtube_dl.YoutubeDL(ydl_opts) as ydl:
         ydl.download([f"{url}"])
 
-    sound = AudioSegment.from_file(os.path.join(destination, blurb, f"{title}.mp3"))
-    sound.export(os.path.join(destination, blurb, f"{title}.wav"), format="wav")
+
+    mp3_to_wav(os.path.join(destination, blurb, f"{title}.mp3"), os.path.join(destination, blurb, f"{title}.wav"))
     
+    if split > 0:
 
-    pathlib.Path(os.path.join(destination, title)).mkdir(parents=True, exist_ok=True)
+        pth = split_audio(path=os.path.join(destination, blurb, f"{title}.wav"), 
+                    destination=os.path.join(destination, title), 
+                    title=title,
+                    split=split)
+    
+        return pth
 
-    newAudio = AudioSegment.from_wav(os.path.join(destination, blurb, f"{title}.wav"))
+
+    return os.path.join(destination, blurb, f"{title}.wav")
+
+
+
+
+
+
+
+
+def split_audio(path, destination, title, split=2500, format='wav'):
+
+    """
+    splits audio file into smaller even samples
+
+    path: location of wav file
+    destination: directory to store split samples
+    title: title to be used when naming samples
+    split: split interval in ms default=2500
+
+    """
+
+    pathlib.Path(destination).mkdir(parents=True, exist_ok=True)
+
+    newAudio = AudioSegment.from_wav(path)
 
     for start, end, val in timestamps(len(newAudio), split):
         cutAudio = newAudio[start:end]
-        cutAudio.export(os.path.join(destination, title, f"{title}_{val-1}.wav"), format='wav')
-
-    return os.path.join(destination, title)
+        cutAudio.export(os.path.join(destination, f"{title}_{val-1}.wav"), format='wav')
 
 
-
-
-def split_audio(path, destination, title=None, split=2500, format='wav'):
-
-    """
-
-    splits audio file into smaller even samples
-
-    """
-
-    return
+    return destination
 
 
 
