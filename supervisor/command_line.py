@@ -13,7 +13,7 @@ def main():
         allow_abbrev=False,
         add_help=True)
 
-    parser.version= '0.1'
+    parser.version= '0.0.1'
 
 
     subparsers = parser.add_subparsers(help='commands')
