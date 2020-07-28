@@ -6,7 +6,7 @@ from .utils import download_youtube_audio, dataset_from_segments
 
 def main():
 
-    parser = argparse.ArgumentParser(prog='audio-supervisor', 
+    parser = argparse.ArgumentParser(prog='audio-cat', 
         description ='manipulate audio.', 
         usage='%(prog)s [command]', 
         epilog='read the docs!', 

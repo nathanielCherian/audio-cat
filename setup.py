@@ -10,14 +10,14 @@ def get_requirements():
     return req
 
 setuptools.setup(
-    name="audio-supervisor",
+    name="audio-cat",
     version="0.0.1",
     author="Nathaniel Cherian",
     author_email="nathaniel@sylica.com",
     description="audio splitter and labeler",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/nathanielCherian/audio-supervisor",
+    url="https://github.com/nathanielCherian/audio-cat",
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",
@@ -29,7 +29,7 @@ setuptools.setup(
     python_requires='>=3.6',
     install_requires= get_requirements(),
     entry_points = {
-        'console_scripts': ['audio-supervisor=supervisor.command_line:main'],
+        'console_scripts': ['audio-cat=supervisor.command_line:main'],
     }
 
 )
