@@ -30,7 +30,7 @@ setuptools.setup(
     python_requires='>=3.6',
     install_requires= get_requirements(),
     entry_points = {
-        'console_scripts': ['audio-cat=supervisor.command_line:main'],
+        'console_scripts': ['audio-cat=audiocat.command_line:main'],
     }
 
 )

@@ -7,7 +7,7 @@ from sklearn.decomposition import PCA
 from sklearn.cluster import KMeans
 from sklearn.metrics import silhouette_score
 
-from sklearn.mixture import GaussianMixture
+from sklearn.mixture import GaussianMixture, BayesianGaussianMixture
 
 
 def scale_and_pca(X, n_components=0.95):
@@ -33,14 +33,14 @@ def scale_and_pca(X, n_components=0.95):
 
 
 
-def optimal_K(X_pca, max=40, random_state=420, inertia=False):
+def optimal_K(X_pca, max_=40, random_state=420, inertia=False):
 
     """
 
     Use k-means to find optimal number of clusters
 
     X_pca: 2d scaled and pca data, see scale_and_pca
-    max: max search of clusters, default=40
+    max_: max_ search of clusters, default=40
     random_state: random state to keep uniformity between trials default=420
     inertia: return list of inertias to plot in format (x, y), default=False
 
@@ -49,20 +49,27 @@ def optimal_K(X_pca, max=40, random_state=420, inertia=False):
     inertias = []
     sils = []
 
-    for k in range(2, max):
+    for k in range(2, max_):
         kmeans = KMeans(n_clusters=k, random_state=random_state).fit(X_pca)
         inertias.append(kmeans.inertia_)
         sils.append(silhouette_score(X_pca, kmeans.labels_))
 
     if inertia:
-        return ([*range(2, max)], inertias)
+        return ([*range(2, max_)], inertias)
 
 
     return np.argmax(sils) + 2
 
 
+def optimal_bayes(X_pca, max_=20, random_state=420):
 
-def gaussian_clustering(K, X_pca, n_init=10, random_state=420):
+    print(max_)
+    bgm = BayesianGaussianMixture(n_components=max_, n_init=10, random_state=420)
+    bgm.fit(X_pca)
+    return np.round(bgm.weights_, 2)
+
+
+def gaussian_clustering(X_pca, K, n_init=10, random_state=420):
 
     """
 
