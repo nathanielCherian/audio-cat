@@ -3,3 +3,4 @@ numpy
 pandas
 scikit-learn
 youtube_dl
+pydub
