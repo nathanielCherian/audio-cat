@@ -63,7 +63,6 @@ def optimal_K(X_pca, max_=40, random_state=420, inertia=False):
 
 def optimal_bayes(X_pca, max_=20, random_state=420):
 
-    print(max_)
     bgm = BayesianGaussianMixture(n_components=max_, n_init=10, random_state=420)
     bgm.fit(X_pca)
     return np.round(bgm.weights_, 2)
