@@ -65,7 +65,10 @@ def optimal_bayes(X_pca, max_=20, random_state=420):
 
     bgm = BayesianGaussianMixture(n_components=max_, n_init=10, random_state=420)
     bgm.fit(X_pca)
-    return np.round(bgm.weights_, 2)
+
+    nn = np.power(10, np.round(bgm.weights_, 2))
+
+    return len(nn[nn > nn.mean()])
 
 
 def gaussian_clustering(X_pca, K, n_init=10, random_state=420):
@@ -128,7 +131,7 @@ def pca_reconstruction_error(X_pca, y_pred):
         
         cluster_labels.iloc[inds] = key
         #print(f"{key} : {inds}")
-        print(f"replaced {len(inds)} instance(s) with {key}")
+        print(f"group {key} replaced {len(inds)} instance(s) with {key}")
         
         labels[key] = cluster_labels
 

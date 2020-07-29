@@ -1,6 +1,7 @@
 import os, csv, pathlib
-from pydub import AudioSegment
+from shutil import copyfile, rmtree
 
+from pydub import AudioSegment
 import numpy as np
 import librosa
 import youtube_dl
@@ -202,3 +203,42 @@ def dataset_from_segments(path, title, destination='datasets', header=header):
 
     
     return os.path.join(destination, f"{title}.csv")
+
+
+def group_samples(filenames, y_pred, title, path, destination='audio', keep_original=True):
+
+    """
+    
+    group audio samples based on labels
+
+    filenames: filenames of samples in type list, array, or series
+    y_pred: labels
+    title: base title of sample location
+    destination: location to store samples default=audio
+    header: desired labels of columns (do not change)
+
+    returns location of dataset
+
+    usage: 
+
+    from audiocat.utils import dataset_from_segments
+    dataset_from_segments('audio/sleep', 'sleep')
+
+    >> 'datasets\\sleep.csv'
+
+    """
+
+    filenames = np.array(filenames)
+
+    pathlib.Path(os.path.join(destination, f'{title}_grouped')).mkdir(parents=True, exist_ok=True)
+
+    for g in set(list(y_pred)):
+        pathlib.Path(os.path.join(destination, f'{title}_grouped', str(g))).mkdir(parents=True, exist_ok=True)
+
+        for f in filenames[y_pred == g]:
+            copyfile(os.path.join(path, f), os.path.join(destination, f'{title}_grouped', str(g), f))
+
+    if not keep_original:
+        rmtree(path)
+
+    return os.path.join(destination, f'{title}_grouped')

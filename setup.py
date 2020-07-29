@@ -11,14 +11,14 @@ def get_requirements():
 
 setuptools.setup(
     name="audio-cat",
-    version="0.0.1",
+    version="0.0.2",
     author="Nathaniel Cherian",
     author_email="nathaniel@sylica.com",
     description="audio splitter and labeler",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/nathanielCherian/audio-cat",
-    download_url = 'https://github.com/nathanielCherian/audio-cat/archive/v0.0.1.tar.gz',
+    download_url = 'https://github.com/nathanielCherian/audio-cat/archive/v0.0.2.tar.gz',
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",
