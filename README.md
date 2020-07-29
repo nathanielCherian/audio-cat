@@ -1,4 +1,7 @@
+
 # audio-cat
+[![Documentation Status](https://readthedocs.org/projects/audio-cat/badge/?version=latest)](https://audio-cat.readthedocs.io/en/latest/?badge=latest)
+
 high-level api to split and categorize audio samples, intended for data collection
 
 Installation
