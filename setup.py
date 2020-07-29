@@ -11,7 +11,7 @@ def get_requirements():
 
 setuptools.setup(
     name="audio-cat",
-    version="0.0.2",
+    version="0.0.3",
     author="Nathaniel Cherian",
     author_email="nathaniel@sylica.com",
     description="audio splitter and labeler",
