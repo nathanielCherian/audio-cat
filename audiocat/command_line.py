@@ -2,6 +2,7 @@ import argparse
 import sys
 
 from .utils import download_youtube_audio, dataset_from_segments
+from .convenience import group_from_dataset_path
 
 
 def main():
@@ -34,7 +35,17 @@ def main():
     ds_parser.add_argument('--des', action='store', help='directory for datasets, will be created if non-existent default=datasets', default='datasets')
     ds_parser.add_argument('--dry', action='store_true', help='dry run to be used in debugging')
 
-
+    ds_parser = subparsers.add_parser('group', help='group similar samples together')
+    ds_parser.add_argument('datapath', action='store', help='path to dataset')
+    ds_parser.add_argument('audiopath', action='store', help='path to full audio samples directory')
+    ds_parser.add_argument('title', action='store', help='desired title of dataset')
+    ds_parser.add_argument('--des', action='store', help='directory for audio, will be created if non-existent default=audio', default='audio')
+    ds_parser.add_argument('--optimizer', action='store', help='optimizer for clustering', choices=['bayes', 'kmeans'], default='bayes')
+    ds_parser.add_argument('--max', action='store', help='max search default=10', type=int, default=10)
+    ds_parser.add_argument('--k', action='store', help='your estimated clusters', type=int)
+    ds_parser.add_argument('--labels', action='store_true', help='add labels to dataset')
+    ds_parser.add_argument('--original', action='store_false', help='keep original samples')
+    ds_parser.add_argument('--dry', action='store_true', help='dry run to be used in debugging')
 
     parser.add_argument("--version", action='version', help="display program version")
 
@@ -70,6 +81,17 @@ def main():
             print(dataset_from_segments(path=args.path,
                                         title=args.title,
                                         destination=args.des))
+
+        if sys.argv[1] == 'group':
+            print(group_from_dataset_path(d_path=args.datapath,
+                                          a_path=args.audiopath,
+                                          title=args.title,
+                                          destination=args.des,
+                                          optimizer=args.optimizer,
+                                          K=args.k,
+                                          max_=args.max,
+                                          add_labels=args.labels,
+                                          keep_original=args.original))
 
 
     else:
