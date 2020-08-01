@@ -22,7 +22,7 @@ copyright = '2020, Nathaniel Cherian'
 author = 'Nathaniel Cherian'
 
 # The full version, including alpha/beta/rc tags
-release = '0.0.3'
+release = '0.0.31'
 
 
 # -- General configuration ---------------------------------------------------
